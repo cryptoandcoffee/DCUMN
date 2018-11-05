@@ -108,8 +108,8 @@ unsigned int GetNextWorkRequiredBTC(const CBlockIndex* pindexLast, const CBlockH
 
 unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHeader *pblock, const Consensus::Params& params)
 {
-    // Default to DarkGravityWave
-        return DarkGravityWave(pindexLast, params); 
+     
+    return LwmaGetNextWorkRequired(pindexLast, pblock, params);
 }
 
 unsigned int LwmaGetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHeader *pblock, const Consensus::Params& params)
@@ -165,9 +165,9 @@ unsigned int LwmaCalculateNextWorkRequired(const CBlockIndex* pindexLast, const 
         sum_target += target / (k * N * N);
     }
     // Keep t reasonable in case strange solvetimes occurred.
-    // if (t < N * k / 3) {
-    //     t = N * k / 3;
-    // }
+     if (t < N * k / 3) {
+         t = N * k / 3;
+     }
     if (t < 1) {
         t = 1;
     }
